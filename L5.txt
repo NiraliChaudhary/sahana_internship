@@ -1,0 +1,4 @@
+good morning
+bad afternoon
+bad evening
+good night
