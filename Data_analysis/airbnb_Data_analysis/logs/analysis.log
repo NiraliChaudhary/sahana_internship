@@ -1,0 +1,150 @@
+2026-05-26 12:00:43,276 - __main__ - INFO - AnalysisPipeline initialized
+2026-05-26 12:00:43,276 - __main__ - INFO - ================================================================================
+2026-05-26 12:00:43,276 - __main__ - INFO - STARTING AIRBNB DATA ANALYSIS PIPELINE
+2026-05-26 12:00:43,276 - __main__ - INFO - ================================================================================
+2026-05-26 12:00:43,276 - __main__ - INFO - Step 1: Loading raw data...
+2026-05-26 12:00:43,276 - data_loader - INFO - DataLoader initialized with file: D:\files (1)\data\Airbnb_data.csv
+2026-05-26 12:00:43,457 - data_loader - INFO - Successfully loaded data. Shape: (48895, 16)
+2026-05-26 12:00:43,457 - data_loader - INFO - Data structure validation passed
+2026-05-26 12:00:43,583 - data_loader - INFO - Dataset info: (48895, 16) with memory usage: 23.45 MB
+2026-05-26 12:00:43,583 - __main__ - INFO - Data loaded successfully. Shape: (48895, 16)
+2026-05-26 12:00:43,583 - __main__ - INFO - Memory usage: 23.45 MB
+2026-05-26 12:00:43,583 - __main__ - INFO - Duplicates: 0
+2026-05-26 12:00:43,583 - __main__ - INFO - 
+Step 2: Cleaning and preprocessing data...
+2026-05-26 12:00:43,603 - data_cleaner - INFO - DataCleaner initialized
+2026-05-26 12:00:43,603 - data_cleaner - INFO - Starting data cleaning pipeline...
+2026-05-26 12:00:43,649 - data_cleaner - INFO - Removed 0 duplicate rows
+2026-05-26 12:00:43,660 - data_cleaner - INFO - Imputed 'host_name' with 'Unknown'
+2026-05-26 12:00:43,670 - data_cleaner - INFO - Imputed 'reviews_per_month' with 0
+2026-05-26 12:00:43,679 - data_cleaner - INFO - Converted 'last_review' to datetime
+2026-05-26 12:00:43,697 - data_cleaner - INFO - Removed 2972 price outliers
+2026-05-26 12:00:43,697 - data_cleaner - INFO - Removed 6185 minimum_nights outliers
+2026-05-26 12:00:43,697 - data_cleaner - INFO - Total rows removed as outliers: 9157
+2026-05-26 12:00:43,711 - data_cleaner - INFO - Removed 9 rows with invalid prices
+2026-05-26 12:00:43,721 - data_cleaner - INFO - Feature engineering completed
+2026-05-26 12:00:43,723 - data_cleaner - INFO - Cleaning complete. Original shape: (48895, 16), Final shape: (39729, 20)
+2026-05-26 12:00:43,730 - __main__ - INFO - Data cleaning completed
+2026-05-26 12:00:43,730 - __main__ - INFO - Shape before cleaning: (48895, 16)
+2026-05-26 12:00:43,730 - __main__ - INFO - Shape after cleaning: (39729, 20)
+2026-05-26 12:00:44,142 - __main__ - INFO - Cleaned data saved to D:\files (1)\data\airbnb_cleaned.csv
+2026-05-26 12:00:44,142 - __main__ - INFO - 
+Step 3: Performing exploratory analysis...
+2026-05-26 12:00:44,142 - exploratory_analyzer - INFO - ExploratoryAnalyzer initialized
+2026-05-26 12:00:44,142 - exploratory_analyzer - INFO - Starting exploratory data analysis...
+2026-05-26 12:00:44,159 - exploratory_analyzer - INFO - Dataset contains 39729 listings from 32365 unique hosts
+2026-05-26 12:00:44,190 - exploratory_analyzer - INFO - Price analysis: mean=$119.03, median=$100.00
+2026-05-26 12:00:44,217 - exploratory_analyzer - INFO - Room type distribution: {'Private room': 19859, 'Entire home/apt': 18880, 'Shared room': 990}
+2026-05-26 12:00:44,243 - exploratory_analyzer - INFO - Geographic analysis completed
+2026-05-26 12:00:44,249 - exploratory_analyzer - INFO - Estimated occupancy rate: 73.4%
+2026-05-26 12:00:44,258 - exploratory_analyzer - INFO - Total reviews: 1047821, 83.1% of listings have reviews
+2026-05-26 12:00:44,272 - exploratory_analyzer - INFO - Total hosts: 32365, avg listings per host: 3.1
+2026-05-26 12:00:44,286 - exploratory_analyzer - INFO - Found 5 strong correlations
+2026-05-26 12:00:44,286 - exploratory_analyzer - INFO - Exploratory analysis completed
+2026-05-26 12:00:44,286 - __main__ - INFO - Exploratory analysis completed
+2026-05-26 12:00:44,286 - __main__ - INFO - 
+Step 4: Creating visualizations...
+2026-05-26 12:00:44,286 - visualizer - INFO - Visualizer initialized
+2026-05-26 12:00:44,286 - visualizer - INFO - Creating all visualizations...
+2026-05-26 12:00:47,350 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\01_price_distribution.png
+2026-05-26 12:00:48,147 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\02_price_by_room_type.png
+2026-05-26 12:00:49,224 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\03_price_by_neighbourhood_group.png
+2026-05-26 12:00:50,141 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\04_expensive_neighbourhoods.png
+2026-05-26 12:00:50,737 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\05_room_type_distribution.png
+2026-05-26 12:00:51,380 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\06_top_neighbourhoods.png
+2026-05-26 12:00:53,711 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\07_geographic_heatmap.png
+2026-05-26 12:00:54,274 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\08_availability_distribution.png
+2026-05-26 12:00:54,761 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\09_occupancy_by_room_type.png
+2026-05-26 12:00:55,368 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\10_review_distribution.png
+2026-05-26 12:00:55,958 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\11_reviews_per_month.png
+2026-05-26 12:00:57,050 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\12_top_hosts.png
+2026-05-26 12:00:57,717 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\13_host_experience.png
+2026-05-26 12:00:58,374 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\14_correlation_heatmap.png
+2026-05-26 12:01:01,558 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\15_price_vs_reviews.png
+2026-05-26 12:01:02,138 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\16_minimum_nights_distribution.png
+2026-05-26 12:01:02,657 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\17_occupancy_by_price.png
+2026-05-26 12:01:02,657 - visualizer - INFO - Created 17 visualizations
+2026-05-26 12:01:02,657 - __main__ - INFO - Created 17 visualizations
+2026-05-26 12:01:02,657 - __main__ - INFO - 
+Step 5: Generating reports...
+2026-05-26 12:01:02,657 - report_generator - INFO - ReportGenerator initialized
+2026-05-26 12:01:02,662 - report_generator - INFO - Generating comprehensive report...
+2026-05-26 12:01:02,662 - __main__ - ERROR - Error generating reports: 'charmap' codec can't encode character '\u2265' in position 3553: character maps to <undefined>
+2026-05-26 12:05:10,110 - __main__ - INFO - AnalysisPipeline initialized
+2026-05-26 12:05:10,110 - __main__ - INFO - ================================================================================
+2026-05-26 12:05:10,110 - __main__ - INFO - STARTING AIRBNB DATA ANALYSIS PIPELINE
+2026-05-26 12:05:10,110 - __main__ - INFO - ================================================================================
+2026-05-26 12:05:10,110 - __main__ - INFO - Step 1: Loading raw data...
+2026-05-26 12:05:10,110 - data_loader - INFO - DataLoader initialized with file: D:\files (1)\data\Airbnb_data.csv
+2026-05-26 12:05:10,308 - data_loader - INFO - Successfully loaded data. Shape: (48895, 16)
+2026-05-26 12:05:10,308 - data_loader - INFO - Data structure validation passed
+2026-05-26 12:05:10,435 - data_loader - INFO - Dataset info: (48895, 16) with memory usage: 23.45 MB
+2026-05-26 12:05:10,435 - __main__ - INFO - Data loaded successfully. Shape: (48895, 16)
+2026-05-26 12:05:10,435 - __main__ - INFO - Memory usage: 23.45 MB
+2026-05-26 12:05:10,435 - __main__ - INFO - Duplicates: 0
+2026-05-26 12:05:10,435 - __main__ - INFO - 
+Step 2: Cleaning and preprocessing data...
+2026-05-26 12:05:10,451 - data_cleaner - INFO - DataCleaner initialized
+2026-05-26 12:05:10,452 - data_cleaner - INFO - Starting data cleaning pipeline...
+2026-05-26 12:05:10,498 - data_cleaner - INFO - Removed 0 duplicate rows
+2026-05-26 12:05:10,498 - data_cleaner - INFO - Imputed 'host_name' with 'Unknown'
+2026-05-26 12:05:10,521 - data_cleaner - INFO - Imputed 'reviews_per_month' with 0
+2026-05-26 12:05:10,521 - data_cleaner - INFO - Converted 'last_review' to datetime
+2026-05-26 12:05:10,537 - data_cleaner - INFO - Removed 2972 price outliers
+2026-05-26 12:05:10,553 - data_cleaner - INFO - Removed 6185 minimum_nights outliers
+2026-05-26 12:05:10,556 - data_cleaner - INFO - Total rows removed as outliers: 9157
+2026-05-26 12:05:10,562 - data_cleaner - INFO - Removed 9 rows with invalid prices
+2026-05-26 12:05:10,568 - data_cleaner - INFO - Feature engineering completed
+2026-05-26 12:05:10,568 - data_cleaner - INFO - Cleaning complete. Original shape: (48895, 16), Final shape: (39729, 20)
+2026-05-26 12:05:10,568 - __main__ - INFO - Data cleaning completed
+2026-05-26 12:05:10,568 - __main__ - INFO - Shape before cleaning: (48895, 16)
+2026-05-26 12:05:10,568 - __main__ - INFO - Shape after cleaning: (39729, 20)
+2026-05-26 12:05:10,900 - __main__ - INFO - Cleaned data saved to D:\files (1)\data\airbnb_cleaned.csv
+2026-05-26 12:05:10,900 - __main__ - INFO - 
+Step 3: Performing exploratory analysis...
+2026-05-26 12:05:10,900 - exploratory_analyzer - INFO - ExploratoryAnalyzer initialized
+2026-05-26 12:05:10,900 - exploratory_analyzer - INFO - Starting exploratory data analysis...
+2026-05-26 12:05:10,900 - exploratory_analyzer - INFO - Dataset contains 39729 listings from 32365 unique hosts
+2026-05-26 12:05:10,931 - exploratory_analyzer - INFO - Price analysis: mean=$119.03, median=$100.00
+2026-05-26 12:05:10,953 - exploratory_analyzer - INFO - Room type distribution: {'Private room': 19859, 'Entire home/apt': 18880, 'Shared room': 990}
+2026-05-26 12:05:10,979 - exploratory_analyzer - INFO - Geographic analysis completed
+2026-05-26 12:05:10,979 - exploratory_analyzer - INFO - Estimated occupancy rate: 73.4%
+2026-05-26 12:05:11,004 - exploratory_analyzer - INFO - Total reviews: 1047821, 83.1% of listings have reviews
+2026-05-26 12:05:11,018 - exploratory_analyzer - INFO - Total hosts: 32365, avg listings per host: 3.1
+2026-05-26 12:05:11,040 - exploratory_analyzer - INFO - Found 5 strong correlations
+2026-05-26 12:05:11,040 - exploratory_analyzer - INFO - Exploratory analysis completed
+2026-05-26 12:05:11,040 - __main__ - INFO - Exploratory analysis completed
+2026-05-26 12:05:11,040 - __main__ - INFO - 
+Step 4: Creating visualizations...
+2026-05-26 12:05:11,043 - visualizer - INFO - Visualizer initialized
+2026-05-26 12:05:11,043 - visualizer - INFO - Creating all visualizations...
+2026-05-26 12:05:13,948 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\01_price_distribution.png
+2026-05-26 12:05:15,293 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\02_price_by_room_type.png
+2026-05-26 12:05:16,429 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\03_price_by_neighbourhood_group.png
+2026-05-26 12:05:17,396 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\04_expensive_neighbourhoods.png
+2026-05-26 12:05:18,040 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\05_room_type_distribution.png
+2026-05-26 12:05:18,658 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\06_top_neighbourhoods.png
+2026-05-26 12:05:21,274 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\07_geographic_heatmap.png
+2026-05-26 12:05:21,911 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\08_availability_distribution.png
+2026-05-26 12:05:22,677 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\09_occupancy_by_room_type.png
+2026-05-26 12:05:23,549 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\10_review_distribution.png
+2026-05-26 12:05:24,295 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\11_reviews_per_month.png
+2026-05-26 12:05:24,942 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\12_top_hosts.png
+2026-05-26 12:05:25,670 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\13_host_experience.png
+2026-05-26 12:05:26,311 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\14_correlation_heatmap.png
+2026-05-26 12:05:29,270 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\15_price_vs_reviews.png
+2026-05-26 12:05:29,887 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\16_minimum_nights_distribution.png
+2026-05-26 12:05:30,517 - visualizer - INFO - Saved plot: D:\files (1)\output\plots\17_occupancy_by_price.png
+2026-05-26 12:05:30,517 - visualizer - INFO - Created 17 visualizations
+2026-05-26 12:05:30,517 - __main__ - INFO - Created 17 visualizations
+2026-05-26 12:05:30,517 - __main__ - INFO - 
+Step 5: Generating reports...
+2026-05-26 12:05:30,517 - report_generator - INFO - ReportGenerator initialized
+2026-05-26 12:05:30,517 - report_generator - INFO - Generating comprehensive report...
+2026-05-26 12:05:30,517 - report_generator - INFO - Report saved to D:\files (1)\output\reports\airbnb_analysis_report.md
+2026-05-26 12:05:30,517 - __main__ - INFO - Markdown report saved to D:\files (1)\output\reports\airbnb_analysis_report.md
+2026-05-26 12:05:30,517 - report_generator - INFO - JSON report saved to D:\files (1)\output\reports\airbnb_analysis_data.json
+2026-05-26 12:05:30,517 - __main__ - INFO - JSON report saved to D:\files (1)\output\reports\airbnb_analysis_data.json
+2026-05-26 12:05:30,517 - __main__ - INFO - ================================================================================
+2026-05-26 12:05:30,517 - __main__ - INFO - PIPELINE EXECUTION COMPLETED SUCCESSFULLY
+2026-05-26 12:05:30,517 - __main__ - INFO - ================================================================================
