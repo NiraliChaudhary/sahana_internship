@@ -1,0 +1,155 @@
+2026-06-10 16:31:01,236 - INFO - Starting execution of main
+2026-06-10 16:31:01,236 - INFO - Starting execution of load_medical_dataset
+2026-06-10 16:31:01,317 - INFO - Dataset loaded: Breast Cancer Wisconsin
+2026-06-10 16:31:01,317 - INFO - Completed load_medical_dataset in 0.0812 seconds
+2026-06-10 16:31:01,317 - INFO - Starting execution of explore_dataset
+2026-06-10 16:31:01,377 - INFO - Dataset exploration completed
+2026-06-10 16:31:01,378 - INFO - Completed explore_dataset in 0.0611 seconds
+2026-06-10 16:31:01,378 - INFO - Starting execution of check_feature_correlation
+2026-06-10 16:31:01,388 - INFO - Feature correlation analysis completed
+2026-06-10 16:31:01,388 - INFO - Completed check_feature_correlation in 0.0100 seconds
+2026-06-10 16:31:01,391 - INFO - Starting execution of prepare_data
+2026-06-10 16:31:01,557 - ERROR - Error in main execution: 'radius_mean'
+Traceback (most recent call last):
+  File "C:\Users\nchau\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'radius_mean'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nchau\OneDrive\Desktop\Internship\sahana_internship\ML\svm.py", line 1622, in main
+    X_train_scaled, X_test_scaled, y_train, y_test, scaler = prepare_data(X, y)
+                                                             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nchau\OneDrive\Desktop\Internship\sahana_internship\ML\svm.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nchau\OneDrive\Desktop\Internship\sahana_internship\ML\svm.py", line 348, in prepare_data
+    print(f"  Feature 'radius_mean' range: [{X_train['radius_mean'].min():.2f}, "
+                                             ~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\nchau\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nchau\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'radius_mean'
+2026-06-11 00:46:31,579 - INFO - Starting execution of main
+2026-06-11 00:46:31,580 - INFO - Starting execution of load_medical_dataset
+2026-06-11 00:46:31,606 - INFO - Dataset loaded: Breast Cancer Wisconsin
+2026-06-11 00:46:31,606 - INFO - Completed load_medical_dataset in 0.0261 seconds
+2026-06-11 00:46:31,607 - INFO - Starting execution of explore_dataset
+2026-06-11 00:46:31,662 - INFO - Dataset exploration completed
+2026-06-11 00:46:31,662 - INFO - Completed explore_dataset in 0.0550 seconds
+2026-06-11 00:46:31,662 - INFO - Starting execution of check_feature_correlation
+2026-06-11 00:46:31,674 - INFO - Feature correlation analysis completed
+2026-06-11 00:46:31,674 - INFO - Completed check_feature_correlation in 0.0116 seconds
+2026-06-11 00:46:31,676 - INFO - Starting execution of prepare_data
+2026-06-11 00:46:31,722 - INFO - Data preprocessing completed
+2026-06-11 00:46:31,722 - INFO - Completed prepare_data in 0.0458 seconds
+2026-06-11 00:46:31,723 - INFO - Starting execution of train_svm_models
+2026-06-11 00:46:31,749 - INFO - Trained linear SVM with 32 support vectors
+2026-06-11 00:46:31,784 - INFO - Trained rbf SVM with 97 support vectors
+2026-06-11 00:46:31,819 - INFO - Trained poly SVM with 145 support vectors
+2026-06-11 00:46:31,838 - INFO - Trained sigmoid SVM with 66 support vectors
+2026-06-11 00:46:31,839 - INFO - Completed train_svm_models in 0.1162 seconds
+2026-06-11 00:46:31,839 - INFO - Starting execution of train_optimal_svm
+2026-06-11 00:46:48,202 - INFO - Best hyperparameters found: {'C': 0.1, 'gamma': 'scale', 'kernel': 'linear'}
+2026-06-11 00:46:48,202 - INFO - Completed train_optimal_svm in 16.3632 seconds
+2026-06-11 00:46:48,202 - INFO - Starting execution of evaluate_model
+2026-06-11 00:46:48,265 - INFO - LINEAR evaluation completed
+2026-06-11 00:46:48,266 - INFO - Completed evaluate_model in 0.0639 seconds
+2026-06-11 00:46:48,266 - INFO - Starting execution of evaluate_model
+2026-06-11 00:46:48,329 - INFO - RBF evaluation completed
+2026-06-11 00:46:48,330 - INFO - Completed evaluate_model in 0.0642 seconds
+2026-06-11 00:46:48,330 - INFO - Starting execution of evaluate_model
+2026-06-11 00:46:48,379 - INFO - POLY evaluation completed
+2026-06-11 00:46:48,380 - INFO - Completed evaluate_model in 0.0496 seconds
+2026-06-11 00:46:48,380 - INFO - Starting execution of evaluate_model
+2026-06-11 00:46:48,431 - INFO - SIGMOID evaluation completed
+2026-06-11 00:46:48,431 - INFO - Completed evaluate_model in 0.0514 seconds
+2026-06-11 00:46:48,431 - INFO - Starting execution of evaluate_model
+2026-06-11 00:46:48,491 - INFO - OPTIMIZED SVM (GridSearchCV) evaluation completed
+2026-06-11 00:46:48,492 - INFO - Completed evaluate_model in 0.0609 seconds
+2026-06-11 00:46:48,492 - INFO - Starting execution of visualize_confusion_matrix
+2026-06-11 00:47:01,582 - INFO - Confusion matrix visualization saved
+2026-06-11 00:47:01,582 - INFO - Completed visualize_confusion_matrix in 13.0901 seconds
+2026-06-11 00:47:01,582 - INFO - Starting execution of visualize_roc_curve
+2026-06-11 00:49:54,465 - INFO - ROC curve visualization saved
+2026-06-11 00:49:54,466 - INFO - Completed visualize_roc_curve in 172.8840 seconds
+2026-06-11 00:49:54,468 - INFO - Starting execution of visualize_decision_boundary
+2026-06-11 00:50:07,230 - INFO - Decision boundary visualization saved
+2026-06-11 00:50:07,232 - INFO - Completed visualize_decision_boundary in 12.7641 seconds
+2026-06-11 00:50:07,232 - INFO - Starting execution of visualize_kernel_comparison
+2026-06-11 00:50:16,398 - INFO - Kernel comparison visualization saved
+2026-06-11 00:50:16,398 - INFO - Completed visualize_kernel_comparison in 9.1662 seconds
+2026-06-11 00:50:16,398 - INFO - Starting execution of visualize_c_parameter_effect
+2026-06-11 00:50:27,833 - INFO - C parameter effect visualization saved
+2026-06-11 00:50:27,833 - INFO - Completed visualize_c_parameter_effect in 11.4350 seconds
+2026-06-11 00:50:27,834 - INFO - Starting execution of visualize_gamma_parameter_effect
+2026-06-11 00:50:35,654 - INFO - Gamma parameter effect visualization saved
+2026-06-11 00:50:35,654 - INFO - Completed visualize_gamma_parameter_effect in 7.8199 seconds
+2026-06-11 00:50:35,659 - INFO - SVM medical diagnosis pipeline completed successfully
+2026-06-11 00:50:35,659 - INFO - Completed main in 244.0796 seconds
+2026-06-11 01:00:30,701 - INFO - Starting execution of main
+2026-06-11 01:00:30,701 - INFO - Starting execution of load_medical_dataset
+2026-06-11 01:00:30,708 - INFO - Dataset loaded: Breast Cancer Wisconsin
+2026-06-11 01:00:30,708 - INFO - Completed load_medical_dataset in 0.0065 seconds
+2026-06-11 01:00:30,708 - INFO - Starting execution of explore_dataset
+2026-06-11 01:00:30,729 - INFO - Dataset exploration completed
+2026-06-11 01:00:30,729 - INFO - Completed explore_dataset in 0.0218 seconds
+2026-06-11 01:00:30,729 - INFO - Starting execution of check_feature_correlation
+2026-06-11 01:00:30,737 - INFO - Feature correlation analysis completed
+2026-06-11 01:00:30,737 - INFO - Completed check_feature_correlation in 0.0081 seconds
+2026-06-11 01:00:30,742 - INFO - Starting execution of prepare_data
+2026-06-11 01:00:30,765 - INFO - Data preprocessing completed
+2026-06-11 01:00:30,765 - INFO - Completed prepare_data in 0.0229 seconds
+2026-06-11 01:00:30,765 - INFO - Starting execution of train_svm_models
+2026-06-11 01:00:30,775 - INFO - Trained linear SVM with 32 support vectors
+2026-06-11 01:00:30,790 - INFO - Trained rbf SVM with 97 support vectors
+2026-06-11 01:00:30,803 - INFO - Trained poly SVM with 145 support vectors
+2026-06-11 01:00:30,813 - INFO - Trained sigmoid SVM with 66 support vectors
+2026-06-11 01:00:30,814 - INFO - Completed train_svm_models in 0.0494 seconds
+2026-06-11 01:00:30,814 - INFO - Starting execution of train_optimal_svm
+2026-06-11 01:00:37,513 - INFO - Best hyperparameters found: {'C': 0.1, 'gamma': 'scale', 'kernel': 'linear'}
+2026-06-11 01:00:37,514 - INFO - Completed train_optimal_svm in 6.6997 seconds
+2026-06-11 01:00:37,514 - INFO - Starting execution of evaluate_model
+2026-06-11 01:00:37,562 - INFO - LINEAR evaluation completed
+2026-06-11 01:00:37,562 - INFO - Completed evaluate_model in 0.0479 seconds
+2026-06-11 01:00:37,562 - INFO - Starting execution of evaluate_model
+2026-06-11 01:00:37,606 - INFO - RBF evaluation completed
+2026-06-11 01:00:37,606 - INFO - Completed evaluate_model in 0.0437 seconds
+2026-06-11 01:00:37,606 - INFO - Starting execution of evaluate_model
+2026-06-11 01:00:37,654 - INFO - POLY evaluation completed
+2026-06-11 01:00:37,654 - INFO - Completed evaluate_model in 0.0479 seconds
+2026-06-11 01:00:37,654 - INFO - Starting execution of evaluate_model
+2026-06-11 01:00:37,691 - INFO - SIGMOID evaluation completed
+2026-06-11 01:00:37,692 - INFO - Completed evaluate_model in 0.0385 seconds
+2026-06-11 01:00:37,692 - INFO - Starting execution of evaluate_model
+2026-06-11 01:00:37,740 - INFO - OPTIMIZED SVM (GridSearchCV) evaluation completed
+2026-06-11 01:00:37,740 - INFO - Completed evaluate_model in 0.0480 seconds
+2026-06-11 01:00:37,741 - INFO - Starting execution of visualize_confusion_matrix
+2026-06-11 01:00:41,030 - INFO - Confusion matrix visualization saved
+2026-06-11 01:00:41,030 - INFO - Completed visualize_confusion_matrix in 3.2889 seconds
+2026-06-11 01:00:41,030 - INFO - Starting execution of visualize_roc_curve
+2026-06-11 01:00:43,442 - INFO - ROC curve visualization saved
+2026-06-11 01:00:43,442 - INFO - Completed visualize_roc_curve in 2.4125 seconds
+2026-06-11 01:00:43,442 - INFO - Starting execution of visualize_decision_boundary
+2026-06-11 01:00:49,444 - INFO - Decision boundary visualization saved
+2026-06-11 01:00:49,452 - INFO - Completed visualize_decision_boundary in 6.0093 seconds
+2026-06-11 01:00:49,452 - INFO - Starting execution of visualize_kernel_comparison
+2026-06-11 01:00:52,136 - INFO - Kernel comparison visualization saved
+2026-06-11 01:00:52,136 - INFO - Completed visualize_kernel_comparison in 2.6839 seconds
+2026-06-11 01:00:52,137 - INFO - Starting execution of visualize_c_parameter_effect
+2026-06-11 01:00:55,268 - INFO - C parameter effect visualization saved
+2026-06-11 01:00:55,268 - INFO - Completed visualize_c_parameter_effect in 3.1312 seconds
+2026-06-11 01:00:55,268 - INFO - Starting execution of visualize_gamma_parameter_effect
+2026-06-11 01:00:57,527 - INFO - Gamma parameter effect visualization saved
+2026-06-11 01:00:57,528 - INFO - Completed visualize_gamma_parameter_effect in 2.2593 seconds
+2026-06-11 01:00:57,532 - INFO - HTML dashboard generated successfully: svm_insights_dashboard.html
+2026-06-11 01:00:57,854 - INFO - SVM medical diagnosis pipeline completed successfully
+2026-06-11 01:00:57,855 - INFO - Completed main in 27.1534 seconds

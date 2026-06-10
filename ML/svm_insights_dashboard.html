@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVM Medical Diagnosis - Insights Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2E86AB;
+            --secondary-color: #A23B72;
+            --success-color: #06A77D;
+            --warning-color: #F18F01;
+            --danger-color: #C1121F;
+            --light-bg: #F8F9FA;
+            --dark-text: #1A1A1A;
+            --border-color: #E0E0E0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark-text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        /* Key Metrics Section */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card .label {
+            font-size: 0.85em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .metric-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .metric-card .subtext {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .metric-card.success .value {
+            color: var(--success-color);
+        }
+
+        .metric-card.warning .value {
+            color: var(--warning-color);
+        }
+
+        .metric-card.danger .value {
+            color: var(--danger-color);
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .chart-container h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.3em;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 15px;
+        }
+
+        /* Visualizations Section */
+        .visualizations-section {
+            margin-bottom: 40px;
+        }
+
+        .visualizations-section h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2em;
+            animation: fadeInLeft 0.8s ease;
+        }
+
+        .visualization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+        }
+
+        .visualization-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.8s ease 0.3s both;
+            transition: transform 0.3s ease;
+        }
+
+        .visualization-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .visualization-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .visualization-title {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        /* Insights Section */
+        .insights-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.8s ease 0.4s both;
+            margin-bottom: 40px;
+        }
+
+        .insights-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .insight-item {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background: var(--light-bg);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .insight-item:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .insight-item strong {
+            color: var(--primary-color);
+        }
+
+        /* Confusion Matrix Display */
+        .confusion-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .cm-cell {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .cm-tn {
+            background: #E8F5E9;
+            border: 2px solid var(--success-color);
+        }
+
+        .cm-tp {
+            background: #E8F5E9;
+            border: 2px solid var(--success-color);
+        }
+
+        .cm-fp {
+            background: #FFF3E0;
+            border: 2px solid var(--warning-color);
+        }
+
+        .cm-fn {
+            background: #FFEBEE;
+            border: 2px solid var(--danger-color);
+        }
+
+        .cm-cell .label {
+            font-size: 0.85em;
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .cm-cell .value {
+            font-size: 1.8em;
+            display: block;
+        }
+
+        /* Hyperparameters Section */
+        .hyperparams {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .hyperparams h4 {
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .param-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .param-item:last-child {
+            border-bottom: none;
+        }
+
+        .param-item span {
+            font-weight: bold;
+        }
+
+        /* Medical Interpretation */
+        .medical-box {
+            background: #E3F2FD;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .medical-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .medical-box p {
+            color: #1565C0;
+            line-height: 1.6;
+        }
+
+        /* Risk Level Badge */
+        .risk-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin: 5px 0;
+        }
+
+        .risk-high {
+            background: #FFEBEE;
+            color: var(--danger-color);
+        }
+
+        .risk-medium {
+            background: #FFF3E0;
+            color: var(--warning-color);
+        }
+
+        .risk-low {
+            background: #E8F5E9;
+            color: var(--success-color);
+        }
+
+        /* Recommendations */
+        .recommendations {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+
+        .recommendations h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .recommendation-list {
+            list-style: none;
+        }
+
+        .recommendation-list li {
+            padding: 15px;
+            margin-bottom: 12px;
+            background: var(--light-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-list li:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .recommendation-list li::before {
+            content: "✓ ";
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            .visualization-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .visualization-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            .metric-card, .chart-container, .visualization-card, .insights-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🔬 SVM Medical Diagnosis</h1>
+            <p>Intelligent Insights & Performance Dashboard</p>
+        </header>
+
+        <!-- Key Performance Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card success">
+                <div class="label">Accuracy</div>
+                <div class="value">98.25%</div>
+                <div class="subtext">Overall Correctness</div>
+            </div>
+
+            <div class="metric-card success">
+                <div class="label">Precision</div>
+                <div class="value">98.61%</div>
+                <div class="subtext">False Positive Rate</div>
+            </div>
+
+            <div class="metric-card success">
+                <div class="label">Recall (Sensitivity)</div>
+                <div class="value">98.61%</div>
+                <div class="subtext">Disease Detection</div>
+            </div>
+
+            <div class="metric-card success">
+                <div class="label">F1 Score</div>
+                <div class="value">0.9861</div>
+                <div class="subtext">Precision-Recall Balance</div>
+            </div>
+
+            <div class="metric-card success">
+                <div class="label">ROC-AUC</div>
+                <div class="value">0.9937</div>
+                <div class="subtext">Classification Quality</div>
+            </div>
+
+            <div class="metric-card success">
+                <div class="label">Best CV Score</div>
+                <div class="value">98.02%</div>
+                <div class="subtext">Cross-Validation</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <!-- Metrics Comparison Chart -->
+            <div class="chart-container">
+                <h3>📊 Performance Metrics Comparison</h3>
+                <div class="chart-wrapper">
+                    <canvas id="metricsChart"></canvas>
+                </div>
+                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                    <strong>Interpretation:</strong> All metrics above 90% indicate excellent model performance. 
+                    The balance between precision and recall is critical for medical diagnosis.
+                </p>
+            </div>
+
+            <!-- Kernel Comparison Chart -->
+            <div class="chart-container">
+                <h3>🎯 Kernel Performance Comparison</h3>
+                <div class="chart-wrapper">
+                    <canvas id="kernelChart"></canvas>
+                </div>
+                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                    <strong>Best Kernel:</strong> LINEAR 
+                    <strong>Accuracy:</strong> 97.37%
+                </p>
+            </div>
+        </div>
+
+        <!-- Confusion Matrix Section -->
+        <div class="chart-container" style="margin-bottom: 40px;">
+            <h3>🎪 Confusion Matrix Breakdown</h3>
+            <div class="confusion-matrix">
+                <div class="cm-cell cm-tn">
+                    <span class="label">True Negatives (TN)</span>
+                    <span class="value">41</span>
+                    <span class="label">Benign Correct</span>
+                </div>
+                <div class="cm-cell cm-fp">
+                    <span class="label">False Positives (FP)</span>
+                    <span class="value">1</span>
+                    <span class="label">False Alarm</span>
+                </div>
+                <div class="cm-cell cm-fn">
+                    <span class="label">False Negatives (FN)</span>
+                    <span class="value">1</span>
+                    <span class="label">Missed Disease</span>
+                </div>
+                <div class="cm-cell cm-tp">
+                    <span class="label">True Positives (TP)</span>
+                    <span class="value">71</span>
+                    <span class="label">Disease Correct</span>
+                </div>
+            </div>
+
+            <div class="medical-box">
+                <h4>🏥 Medical Risk Assessment</h4>
+                <p>
+                    <strong>False Negative Rate:</strong> 1.39% 
+                    <span class="risk-badge risk-low">
+                        LOW RISK
+                    </span>
+                    <br>
+                    <strong>False Positive Rate:</strong> 2.38%
+                    <span class="risk-badge risk-low">
+                        LOW ALERT
+                    </span>
+                </p>
+                <p style="margin-top: 10px;">
+                    Missing 1 actual disease cases is <strong>critical</strong> in medical diagnosis.
+                    The current model correctly identifies 71 out of 72 disease cases.
+                </p>
+            </div>
+        </div>
+
+        <!-- Hyperparameters Section -->
+        <div class="chart-container" style="margin-bottom: 40px;">
+            <h3>⚙️ Optimized Hyperparameters (GridSearchCV)</h3>
+            <div class="hyperparams">
+                <h4>Best Configuration Found:</h4>
+                <div class="param-item">
+                    <span>🔧 Kernel:</span> LINEAR
+                </div>
+                <div class="param-item">
+                    <span>⚡ C (Regularization):</span> 0.1
+                </div>
+                <div class="param-item">
+                    <span>🎯 Gamma (Influence):</span> scale
+                </div>
+                <div class="param-item">
+                    <span>📈 Cross-Validation Score:</span> 98.02%
+                </div>
+            </div>
+            <div class="medical-box">
+                <h4>Why These Parameters?</h4>
+                <p>
+                    The <strong>LINEAR</strong> kernel was selected because it best captures 
+                    the decision boundary in this medical dataset. The C value of <strong>0.1</strong> 
+                    balances regularization with training accuracy. These parameters were chosen through exhaustive 
+                    GridSearchCV evaluation with 5-fold cross-validation.
+                </p>
+            </div>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="visualizations-section">
+            <h2>📈 Detailed Visualizations</h2>
+            <div class="visualization-grid">
+                <div class="visualization-card">
+                    <div class="visualization-title">Confusion Matrix Heatmap</div>
+                    <img src="confusion_matrix_optimized svm.png" alt="Confusion Matrix">
+                </div>
+                <div class="visualization-card">
+                    <div class="visualization-title">ROC Curve & AUC</div>
+                    <img src="roc_curve_optimized svm.png" alt="ROC Curve">
+                </div>
+                <div class="visualization-card">
+                    <div class="visualization-title">Decision Boundary (2D Projection)</div>
+                    <img src="decision_boundary_optimized svm.png" alt="Decision Boundary">
+                </div>
+                <div class="visualization-card">
+                    <div class="visualization-title">Kernel Comparison</div>
+                    <img src="kernel_comparison.png" alt="Kernel Comparison">
+                </div>
+                <div class="visualization-card">
+                    <div class="visualization-title">C Parameter Effect on Performance</div>
+                    <img src="c_parameter_effect.png" alt="C Parameter">
+                </div>
+                <div class="visualization-card">
+                    <div class="visualization-title">Gamma Parameter Effect on Performance</div>
+                    <img src="gamma_parameter_effect.png" alt="Gamma Parameter">
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Insights -->
+        <div class="insights-section">
+            <h2>💡 Key Insights & Analysis</h2>
+
+            <h3 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Model Performance Insights</h3>
+            <div class="insight-item">
+                <strong>✅ Excellent Overall Accuracy:</strong> The model achieves 98.25% accuracy, 
+                correctly classifying 112 out of 114 cases.
+            </div>
+            <div class="insight-item">
+                <strong>✅ High Sensitivity (Recall):</strong> 98.61% of actual disease cases are correctly 
+                identified, minimizing missed diagnoses.
+            </div>
+            <div class="insight-item">
+                <strong>✅ Strong Precision:</strong> 98.61% of positive predictions are correct, 
+                reducing unnecessary patient anxiety from false alarms.
+            </div>
+            <div class="insight-item">
+                <strong>✅ Balanced Performance:</strong> F1 Score of 0.9861 indicates excellent balance between 
+                precision and recall, both critical for medical diagnosis.
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Feature & Algorithm Insights</h3>
+            <div class="insight-item">
+                <strong>🎯 Optimal Kernel Selected:</strong> LINEAR kernel works best for this dataset, 
+                indicating linear decision boundaries in the medical features.
+            </div>
+            <div class="insight-item">
+                <strong>📊 Feature Scaling Impact:</strong> StandardScaler was essential - it ensured all 30 medical measurements 
+                contributed equally to the decision boundary, preventing high-range features from dominating.
+            </div>
+            <div class="insight-item">
+                <strong>🔍 Support Vectors:</strong> The model uses only support vectors (boundary points) for prediction, 
+                making it memory-efficient and interpretable.
+            </div>
+            <div class="insight-item">
+                <strong>⚙️ Hyperparameter Optimization:</strong> GridSearchCV tested 96 parameter combinations (4 kernels × 4 C values × 6 gamma values) 
+                to find the optimal configuration with 98.02% cross-validation accuracy.
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Medical Applicability</h3>
+            <div class="insight-item">
+                <strong>🏥 Clinical Readiness:</strong> With 98.61% sensitivity and 98.61% precision, 
+                this model is suitable as a <strong>decision support tool</strong> for radiologists and pathologists.
+            </div>
+            <div class="insight-item">
+                <strong>⚠️ Risk Management:</strong> False negative rate of 1.39% means approximately 1 in 100 
+                diseased patients might be missed. Recommend human expert review before finalizing diagnosis.
+            </div>
+            <div class="insight-item">
+                <strong>👨‍⚕️ Integration Strategy:</strong> Best used as preliminary screening tool, with positive cases 
+                referred for detailed specialist examination.
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Why SVM Succeeded Here</h3>
+            <div class="insight-item">
+                <strong>1️⃣ High-Dimensional Data:</strong> 30 medical features - SVM handles this well through kernel trick 
+                and doesn't suffer from curse of dimensionality like some algorithms.
+            </div>
+            <div class="insight-item">
+                <strong>2️⃣ Clear Separability:</strong> Medical measurements naturally separate benign from malignant cases, 
+                and SVM excels at finding optimal separating hyperplanes.
+            </div>
+            <div class="insight-item">
+                <strong>3️⃣ Robust Margins:</strong> Maximum margin principle ensures the decision boundary stays far from 
+                training points, improving generalization to new patients.
+            </div>
+            <div class="insight-item">
+                <strong>4️⃣ Interpretability:</strong> Support vectors identify the most informative cases, helping clinicians 
+                understand which features matter most.
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recommendations">
+            <h2>🎯 Recommendations for Deployment</h2>
+            <ul class="recommendation-list">
+                <li><strong>Validation:</strong> Validate model on independent external dataset before clinical deployment</li>
+                <li><strong>Monitoring:</strong> Continuously monitor model performance as new patient data arrives</li>
+                <li><strong>Retraining:</strong> Retrain model quarterly or when performance drops below 95% accuracy</li>
+                <li><strong>Ensemble:</strong> Combine SVM with other algorithms (Random Forest, Neural Networks) for robustness</li>
+                <li><strong>Documentation:</strong> Maintain audit trail of all predictions for regulatory compliance</li>
+                <li><strong>User Training:</strong> Educate clinicians on model limitations and when to seek expert review</li>
+                <li><strong>Confidence Scores:</strong> Use probability estimates to flag uncertain predictions for review</li>
+                <li><strong>Fairness Testing:</strong> Test for bias across demographic groups before deployment</li>
+                <li><strong>API Development:</strong> Create REST API for easy integration into hospital information systems</li>
+                <li><strong>Performance Dashboard:</strong> Set up real-time monitoring dashboard for model metrics</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>🔬 SVM Medical Diagnosis Dashboard</p>
+            <p>Generated with Industrial-Grade Machine Learning Pipeline</p>
+            <p>Dataset: Breast Cancer Wisconsin | Algorithm: Support Vector Machine</p>
+            <p>All visualizations and insights computed with high accuracy standards</p>
+        </footer>
+    </div>
+
+    <script>
+        // Metrics Comparison Chart
+        const metricsCtx = document.getElementById('metricsChart').getContext('2d');
+        new Chart(metricsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'Specificity', 'Sensitivity'],
+                datasets: [{
+                    label: 'Model Performance',
+                    data: [0.9825, 0.9861, 0.9861, 0.9861, 0.9762, 0.9861],
+                    borderColor: 'rgb(46, 134, 171)',
+                    backgroundColor: 'rgba(46, 134, 171, 0.2)',
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgb(46, 134, 171)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: {
+                            callback: function(value) {
+                                return (value * 100).toFixed(0) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Kernel Comparison Chart
+        const kernelCtx = document.getElementById('kernelChart').getContext('2d');
+        new Chart(kernelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['linear', 'rbf', 'poly', 'sigmoid'],
+                datasets: [{
+                    label: 'Accuracy',
+                    data: [0.9736842105263158, 0.9824561403508771, 0.9122807017543859, 0.9298245614035088],
+                    backgroundColor: [
+                        'rgba(255, 107, 107, 0.8)',
+                        'rgba(78, 205, 196, 0.8)',
+                        'rgba(69, 183, 209, 0.8)',
+                        'rgba(255, 160, 122, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 107, 107)',
+                        'rgb(78, 205, 196)',
+                        'rgb(69, 183, 209)',
+                        'rgb(255, 160, 122)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'x',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: {
+                            callback: function(value) {
+                                return (value * 100).toFixed(0) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+    
